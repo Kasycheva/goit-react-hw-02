@@ -1,0 +1,14 @@
+.feedback_stats_wrapper {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+  
+  .feedback_stats {
+    font-size: 1rem;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    color: #444;
+  }

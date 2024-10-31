@@ -1,0 +1,42 @@
+.button_wrapper {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .button_feedback {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .button_feedback.good {
+    background-color: #5cb85c; 
+    color: white;
+  }
+  
+  .button_feedback.neutral {
+    background-color: #f0ad4e; 
+    color: white;
+  }
+  
+  .button_feedback.bad {
+    background-color: #d9534f; 
+    color: white;
+  }
+  
+  .button_feedback.reset {
+    background-color: #0275d8; 
+    color: white;
+  }
+  
+  .button_feedback:hover {
+    opacity: 0.8; 
+  }
+  

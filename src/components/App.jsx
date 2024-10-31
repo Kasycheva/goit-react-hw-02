@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
+import Description from './Description/Description';
+import Options from './Options/Options';
+import Feedback from './Feedback/Feedback';
+import Notification from './Notification/Notification';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [feedback, setFeedback] = useState(() => {
+    const savedFeedback = localStorage.getItem('feedback');
+    return savedFeedback ? JSON.parse(savedFeedback) : { good: 0, neutral: 0, bad: 0 };
+  });
+
+  useEffect(() => {
+    localStorage.setItem('feedback', JSON.stringify(feedback));
+  }, [feedback]);
+
+  const { good, neutral, bad } = feedback;
+  const totalFeedback = good + neutral + bad;
+
+  const updateFeedback = feedbackType => {
+    setFeedback(prevFeedback => ({
+      ...prevFeedback,
+      [feedbackType]: prevFeedback[feedbackType] + 1,
+    }));
+  };
+
+  const resetFeedback = () => {
+    setFeedback({
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    });
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className='container'>
+      <Description />
+      <Options onLeaveFeedback={updateFeedback} resetFeedback={resetFeedback} totalFeedback={totalFeedback} />
+      {totalFeedback > 0 ? (
+        <Feedback valueFeedBack={feedback} totalFeedback={totalFeedback} />
+      ) : (
+        <Notification />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
